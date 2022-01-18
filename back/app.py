@@ -2,6 +2,7 @@ from flask import Flask
 import investpy
 import json
 from flask_cors import CORS, cross_origin
+from flask import request
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -22,6 +23,13 @@ def search(name):
     json1 = {'stocks':a}
     # return json.dumps(json1, indent=4)
     return json1
+
+@app.route("/info/<symbol>")
+@cross_origin()
+def stats(symbol):
+    country = request.args.get('country')
+    search_result = investpy.search_quotes(text=symbol, countries=[country], n_results=1)
+    return json.loads(str(search_result))
 
 if __name__ == '__main__':
     app.run()

@@ -1,13 +1,16 @@
 // import logo from './logo.svg';
 import './App.css';
-// import ApiList from './components/ApiList';
 import SearchBar from './components/SearchBar';
+import AssetCard from './components/AssetCard';
+import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <SearchBar />
-      {/* <ApiList asset_name={'b'}/> */}
+      <Routes>
+        <Route path="/" element={<SearchBar />} />
+        <Route path="/stats/:symbol/:country" element={<AssetCard asset_symbol="A" asset_country="thailand" />} />
+      </Routes>
     </div>
   );
 }

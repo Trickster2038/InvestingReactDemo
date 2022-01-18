@@ -1,18 +1,24 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import { browserHistory } from 'react-router';
 
 class ApiList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // asset_name: this.props.asset_name,
             error: null,
             isLoaded: false,
             items: []
         };
     }
 
-    call_api() {
+    call_api() { 
         { console.log('api call ' + this.props.asset_name()) }
         fetch("http://localhost:5000/search/" + this.props.asset_name())
             .then(res => res.json())
@@ -44,6 +50,13 @@ class ApiList extends React.Component {
         }
     }
 
+    cellClickHandler(params) {
+        const name = params.row.name
+        const url = '/stats/' + params.row.symbol + '/' +  params.row.exchange
+        console.log(url)
+        window.location.replace(url);
+    }
+
     render() {
         const { error, isLoaded, items } = this.state;
         if (error) {
@@ -72,6 +85,7 @@ class ApiList extends React.Component {
                         columns={columns}
                         pageSize={10}
                         rowsPerPageOptions={[10]}
+                        onCellClick={this.cellClickHandler}
                     />
                 </div>
             );
