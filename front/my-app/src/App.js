@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<SearchBar />} />
-        <Route path="/stats/:symbol/:country" element={<AssetCard asset_symbol="A" asset_country="thailand" />} />
+        <Route path="/stats" element={<AssetCard asset_symbol="A" asset_country="thailand" />} />
       </Routes>
     </div>
   );

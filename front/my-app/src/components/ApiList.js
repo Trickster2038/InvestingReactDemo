@@ -52,7 +52,7 @@ class ApiList extends React.Component {
 
     cellClickHandler(params) {
         const name = params.row.name
-        const url = '/stats/' + params.row.symbol + '/' +  params.row.exchange
+        const url = '/stats?symbol=' + params.row.symbol + '&country=' +  params.row.country
         console.log(url)
         window.location.replace(url);
     }
