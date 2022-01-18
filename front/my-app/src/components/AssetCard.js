@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useSearchParams } from "react-router-dom";
+import HistoryChart from './HistoryChart';
 
 class AssetCard extends React.Component {
     constructor(props) {
@@ -13,7 +13,8 @@ class AssetCard extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            item: []
+            item: [],
+            history: []
         };
     }
 
@@ -31,7 +32,8 @@ class AssetCard extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        item: result
+                        item: result.info,
+                        history: result.history
                     });
                 },
                 // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
@@ -54,7 +56,7 @@ class AssetCard extends React.Component {
     }
 
     render() {
-        const { error, isLoaded, item } = this.state;
+        const { error, isLoaded, item, history } = this.state;
         if (error) {
             return <div>Ошибка: {error.message}</div>;
         } else if (!isLoaded) {
@@ -73,6 +75,7 @@ class AssetCard extends React.Component {
                             <Typography gutterBottom variant="h5" component="div">
                                 {item.name}
                             </Typography>
+                            <HistoryChart data={history} />
                             <div style={{ textAlign: 'left' }}>
                                 <Typography variant="body1" color="text.secondary">
                                     Symbol: &nbsp; {item.symbol} <br/>

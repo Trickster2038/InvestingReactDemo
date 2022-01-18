@@ -29,7 +29,9 @@ def search(name):
 def stats(symbol):
     country = request.args.get('country')
     search_result = investpy.search_quotes(text=symbol, countries=[country], n_results=1)
-    return json.loads(str(search_result))
+    info = json.loads(str(search_result))
+    history = json.loads(str(search_result.retrieve_recent_data().to_json()))
+    return {'info': info, 'history': history}
 
 if __name__ == '__main__':
     app.run()
