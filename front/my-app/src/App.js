@@ -1,6 +1,7 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import List from './components/List';
+import ApiList from './components/ApiList';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         </a>
       </header> */}
       <List />
+      <ApiList />
     </div>
   );
 }
