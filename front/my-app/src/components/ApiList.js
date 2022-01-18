@@ -1,4 +1,6 @@
 import React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
 
 class ApiList extends React.Component {
     constructor(props) {
@@ -38,14 +40,31 @@ class ApiList extends React.Component {
         } else if (!isLoaded) {
             return <div>Загрузка...</div>;
         } else {
+            {
+                items.map(item => (
+                    item.id = item.id_
+                ))
+            }
+            const columns = [
+                { field: 'id', headerName: 'ID', width: 70 },
+                { field: 'symbol', headerName: 'Symbol', width: 130 }]
             return (
-                <ul>
-                    {items.map(item => (
-                        <li key={item.id}>
-                            {item.name} {item.symbol}
-                        </li>
-                    ))}
-                </ul>
+                // <ul>
+                //     {items.map(item => (
+                //         <li key={item.id_}>
+                //             {item.name} {item.symbol}
+                //             <Button variant="contained">Contained</Button>
+                //             {item.id = item.id_}
+                //             {item.id}
+                //         </li>
+                //     ))}
+                // </ul>
+                <div style={{ height: 700, width: '100%' }}>
+                    <DataGrid
+                        rows={items}
+                        columns={columns}
+                    />
+                </div>
             );
         }
     }
