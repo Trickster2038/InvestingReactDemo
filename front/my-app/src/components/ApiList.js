@@ -1,19 +1,20 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
 
 class ApiList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            // asset_name: this.props.asset_name,
             error: null,
             isLoaded: false,
             items: []
         };
     }
 
-    componentDidMount() {
-        fetch("http://localhost:5000/search/a")
+    call_api() {
+        { console.log('api call ' + this.props.asset_name()) }
+        fetch("http://localhost:5000/search/" + this.props.asset_name())
             .then(res => res.json())
             .then(
                 (result) => {
@@ -33,6 +34,16 @@ class ApiList extends React.Component {
             )
     }
 
+    componentDidMount() {
+        this.call_api()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.asset_name !== prevProps.asset_name) {
+            this.call_api()
+        }
+    }
+
     render() {
         const { error, isLoaded, items } = this.state;
         if (error) {
@@ -46,23 +57,21 @@ class ApiList extends React.Component {
                 ))
             }
             const columns = [
-                { field: 'id', headerName: 'ID', width: 70 },
-                { field: 'symbol', headerName: 'Symbol', width: 130 }]
+                { field: 'name', headerName: 'Name', width: 300 },
+                { field: 'symbol', headerName: 'Symbol', width: 100 },
+                { field: 'exchange', headerName: 'Exchange', width: 100 },
+                { field: 'pair_type', headerName: 'Type', width: 100 },
+                { field: 'country', headerName: 'Country', width: 200 }
+            ]
+            // this.call_api()
             return (
-                // <ul>
-                //     {items.map(item => (
-                //         <li key={item.id_}>
-                //             {item.name} {item.symbol}
-                //             <Button variant="contained">Contained</Button>
-                //             {item.id = item.id_}
-                //             {item.id}
-                //         </li>
-                //     ))}
-                // </ul>
-                <div style={{ height: 700, width: '100%' }}>
+                <div style={{ margin: 'auto', height: 700, width: '70%' }}>
+                    {console.log('render grid ' + this.props.asset_name())}
                     <DataGrid
                         rows={items}
                         columns={columns}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
                     />
                 </div>
             );
